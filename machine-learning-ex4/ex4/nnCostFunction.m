@@ -70,7 +70,7 @@ a2 = sigmoid(z2);
 a2 = [ones(size(a2, 1), 1) a2];
 z3 = a2 * Theta2';
 a3 = sigmoid(z3);
-h =a3;
+h = a3;
 
 T_heta1 = Theta1;
 T_heta1(:,1) = 0;
@@ -78,6 +78,21 @@ T_heta2 = Theta2;
 T_heta2(:,1) = 0;
 
 J = sum(sum((1/m) * [-(y_matrix .* log(h)) - ((1 - y_matrix) .* log(1 - (h)))])) + [lambda/(2 * m)] * [sum(sum(T_heta1 .^ 2)) + sum(sum(T_heta2 .^ 2))];
+
+d3 = a3 - y_matrix;
+d2 = [d3 * Theta2(:,2:end)] .* sigmoidGradient(z2);
+
+Delta1 = a1' * d2;
+Delta2 = a2' * d3;
+
+T_heta1 = (lambda/m) * T_heta1;
+T_heta2 = (lambda/m) * T_heta2;
+
+Theta1_grad = (1/m) .* (Delta1);
+Theta2_grad = (1/m) .* (Delta2);
+
+Theta1_grad = Theta1_grad' .+ T_heta1;
+Theta2_grad = Theta2_grad' .+ T_heta2;
 
 % -------------------------------------------------------------
 
