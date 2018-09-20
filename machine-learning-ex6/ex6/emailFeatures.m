@@ -10,6 +10,9 @@ n = 1899;
 % You need to return the following variables correctly.
 x = zeros(n, 1);
 
+% Load Vocabulary
+vocabList = getVocabList();
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return a feature vector for the
 %               given email (word_indices). To help make it easier to 
@@ -47,13 +50,13 @@ x = zeros(n, 1);
 %              x = [ 0 0 0 0 1 0 0 0 ... 0 0 0 0 1 ... 0 0 0 1 0 ..];
 %
 %
-
-
-
-
-
-
-
+for i = [1 : length(word_indices)],
+    for j = [1 : n],
+        if(word_indices(i) == vocabList{j}),
+            x(j) = 1;
+            break;
+    end;
+end;
 
 % =========================================================================
     
